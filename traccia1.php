@@ -7,6 +7,7 @@ class Company{
     public $tot_employees = 0;
 
     static public $avg_wage = 1500;
+    static public $totaleSpeseAziende;
 
     public function __construct($_name,$_location,$_tot_employees){
 
@@ -24,13 +25,22 @@ class Company{
 
     public function stampaSpesaAnnuale(){
 
-        $spesaTotale = (self::$avg_wage*14)*$this->tot_employees;
-        echo "La spesa totale annuale di $this->name è di €$spesaTotale\n";
+        $spesaAzienda = (self::$avg_wage*14)*$this->tot_employees;
+        self::$totaleSpeseAziende += $spesaAzienda;
+        return $spesaAzienda;
+        
     }
 
-    public static function stampaTotaliAziende(){
+    public function stampaSpesaPeriodo($months){
 
+        return (self::$avg_wage*$months)*$this->tot_employees;
+        
     }
+
+    static public function spesaTotaleAziende(){
+       echo self::$totaleSpeseAziende;
+    }
+ 
 
 }
 
@@ -41,17 +51,10 @@ $azienda3 = new Company("Samsung","Cina",10000);
 $azienda4 = new Company("Audi","Germania",6000);
 $azienda5 = new Company("Nike","USA",3000);
 
-$azienda1->stampaPresentazione();
-$azienda1->stampaSpesaAnnuale();
+echo $azienda1->stampaSpesaAnnuale()."\n";
+echo $azienda2->stampaSpesaAnnuale()."\n";
+echo $azienda3->stampaSpesaAnnuale()."\n";
+echo $azienda4->stampaSpesaAnnuale()."\n";
+echo $azienda5->stampaSpesaAnnuale()."\n";
 
-$azienda2->stampaPresentazione();
-$azienda2->stampaSpesaAnnuale();
-
-$azienda3->stampaPresentazione();
-$azienda3->stampaSpesaAnnuale();
-
-$azienda4->stampaPresentazione();
-$azienda4->stampaSpesaAnnuale();
-
-$azienda5->stampaPresentazione();
-$azienda5->stampaSpesaAnnuale();
+Company::spesaTotaleAziende();
